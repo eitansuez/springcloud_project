@@ -22,6 +22,7 @@ repositories {
 }
 
 ext {
+  springCloudServicesVersion = '1.5.0.RELEASE'
   springCloudVersion = 'Dalston.SR3'
 }
 
@@ -30,10 +31,13 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-actuator'
   compile 'org.springframework.boot:spring-boot-starter-freemarker'
 
-  compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
-  compile 'org.springframework.cloud:spring-cloud-starter-eureka'
   compile 'org.springframework.cloud:spring-cloud-starter-feign'
-  compile 'org.springframework.cloud:spring-cloud-starter-config'
+
+  compile 'io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry'
+  compile 'io.pivotal.spring.cloud:spring-cloud-services-starter-config-client'
+  compile 'io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker'
+
+  compile 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 
   runtime 'org.springframework.boot:spring-boot-devtools'
 
@@ -45,6 +49,7 @@ dependencies {
 
 dependencyManagement {
   imports {
+    mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
     mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
   }
 }

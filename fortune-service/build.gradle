@@ -29,6 +29,7 @@ repositories {
 }
 
 ext {
+  springCloudServicesVersion = '1.5.0.RELEASE'
   springCloudVersion = 'Dalston.SR3'
 }
 
@@ -36,6 +37,7 @@ dependencyManagement {
   imports {
     mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${contractVerifierVersion}"
     mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
   }
 }
 
@@ -48,8 +50,8 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-starter-actuator'
 
-  compile 'org.springframework.cloud:spring-cloud-starter-eureka'
-  compile 'org.springframework.cloud:spring-cloud-starter-config'
+  compile 'io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry'
+  compile 'io.pivotal.spring.cloud:spring-cloud-services-starter-config-client'
 
   runtime 'org.springframework.boot:spring-boot-devtools'
 

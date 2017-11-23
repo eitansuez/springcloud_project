@@ -1,0 +1,12 @@
+---
+applications:
+- name: fortune
+  path: build/libs/fortune-service-0.0.1-SNAPSHOT.jar
+  host: eitan-fortune-service
+  memory: 768M
+  services:
+  - config-server
+  - service-registry
+  env:
+    SPRING_CLOUD_CONFIG_DISCOVERY_ENABLED: false
+
