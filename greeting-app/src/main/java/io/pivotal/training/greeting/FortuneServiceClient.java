@@ -1,5 +1,7 @@
 package io.pivotal.training.greeting;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,20 +14,25 @@ import java.util.Map;
 @Slf4j
 public class FortuneServiceClient {
   private RestTemplate restTemplate;
+  private EurekaClient eurekaClient;
 
-  @Value("${fortuneService.baseUrl}")
-  private String baseUrl;
-
-  public FortuneServiceClient(RestTemplate restTemplate) {
+  public FortuneServiceClient(RestTemplate restTemplate, EurekaClient eurekaClient) {
     this.restTemplate = restTemplate;
+    this.eurekaClient = eurekaClient;
   }
 
   @HystrixCommand(fallbackMethod = "defaultFortune")
   public String getFortune() {
+    String baseUrl = lookupUrlFor("FORTUNE");
     Map<String,String> result = restTemplate.getForObject(baseUrl, Map.class);
     String fortune = result.get("fortune");
     log.info("received fortune '{}'", fortune);
     return fortune;
+  }
+
+  private String lookupUrlFor(String appName) {
+    InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka(appName, false);
+    return instanceInfo.getHomePageUrl();
   }
 
   public String defaultFortune() {
