@@ -10,15 +10,15 @@ import java.util.Map;
 @Component
 @Slf4j
 public class FortuneServiceClient {
-  private RestTemplate restTemplate;
+  private FortuneAPI fortuneAPI;
 
-  public FortuneServiceClient(RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
+  public FortuneServiceClient(FortuneAPI fortuneAPI) {
+    this.fortuneAPI = fortuneAPI;
   }
 
   @HystrixCommand(fallbackMethod = "defaultFortune")
   public String getFortune() {
-    Map<String,String> result = restTemplate.getForObject("http://fortune/", Map.class);
+    Map<String,String> result = fortuneAPI.getFortune();
     String fortune = result.get("fortune");
     log.info("received fortune '{}'", fortune);
     return fortune;
