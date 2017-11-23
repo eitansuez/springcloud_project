@@ -8,3 +8,6 @@ management:
 
 greeting:
   displayFortune: true
+
+fortuneService:
+  baseUrl:  http://localhost:8081

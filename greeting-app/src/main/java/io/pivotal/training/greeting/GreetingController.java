@@ -1,6 +1,5 @@
 package io.pivotal.training.greeting;
 
-import io.pivotal.training.fortune.FortuneService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,11 +12,11 @@ public class GreetingController {
   private final Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
   private final GreetingProperties greetingProperties;
-  private final FortuneService fortuneService;
+  private final FortuneServiceClient fortuneServiceClient;
 
-  public GreetingController(GreetingProperties greetingProperties, FortuneService fortuneService) {
+  public GreetingController(GreetingProperties greetingProperties, FortuneServiceClient fortuneServiceClient) {
     this.greetingProperties = greetingProperties;
-    this.fortuneService = fortuneService;
+    this.fortuneServiceClient = fortuneServiceClient;
   }
 
   @GetMapping("/")
@@ -28,7 +27,7 @@ public class GreetingController {
 
     if (greetingProperties.isDisplayFortune()) {
       logger.debug("Adding fortune");
-      model.addAttribute("fortune", fortuneService.getFortune());
+      model.addAttribute("fortune", fortuneServiceClient.getFortune());
     }
 
     return "greeting"; // resolves to the greeting.ftl template

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: fortune
+
+management:
+  security:
+    enabled: false
+
+server:
+  port: 8081

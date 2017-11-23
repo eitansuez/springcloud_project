@@ -1,6 +1,5 @@
 package io.pivotal.training.greeting;
 
-import io.pivotal.training.fortune.FortuneService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,22 +9,20 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.ExtendedModelMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GreetingControllerUnitTests {
 
   @Mock private GreetingProperties greetingProperties;
-  @Mock private FortuneService fortuneService;
+  @Mock private FortuneServiceClient fortuneServiceClient;
   private GreetingController controller;
   private ExtendedModelMap model;
 
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(GreetingControllerUnitTests.class);
-    controller = new GreetingController(greetingProperties, fortuneService);
+    controller = new GreetingController(greetingProperties, fortuneServiceClient);
     model = new ExtendedModelMap();
   }
 
@@ -47,7 +44,7 @@ public class GreetingControllerUnitTests {
     controller.getGreeting(model);
 
     //then..
-    verify(fortuneService, never()).getFortune();
+    verify(fortuneServiceClient, never()).getFortune();
     assertThat(model.asMap().get("fortune")).isNull();
   }
 
@@ -55,13 +52,13 @@ public class GreetingControllerUnitTests {
   public void getGreetingShouldSetFortuneAttributeWhenConfigured() {
     //given..
     when(greetingProperties.isDisplayFortune()).thenReturn(true);
-    when(fortuneService.getFortune()).thenReturn("a fortune");
+    when(fortuneServiceClient.getFortune()).thenReturn("a fortune");
 
     //when..
     controller.getGreeting(model);
 
     //then..
-    verify(fortuneService).getFortune();
+    verify(fortuneServiceClient).getFortune();
     assertThat(model.asMap().get("fortune")).isEqualTo("a fortune");
   }
 
