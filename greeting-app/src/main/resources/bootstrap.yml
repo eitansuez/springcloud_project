@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: greeting
+  cloud:
+    config:
+      discovery:
+        enabled: true

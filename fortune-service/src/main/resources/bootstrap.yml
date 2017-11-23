@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: fortune
+  cloud:
+    config:
+      discovery:
+        enabled: true
+
+server:
+  port: 8081
