@@ -1,0 +1,7 @@
+
+stubrunner:
+  ids-to-service-ids:
+    fortune-service: fortune
+eureka:
+  client:
+    enabled: false
