@@ -1,0 +1,4 @@
+# springcloud_project
+Labs for MicroServices with Spring Cloud Course
+
+See https://github.com/eitansuez/springcloud_project_v2[^] for an updated version of this repository (updates versions of Spring Boot, Cloud, and Cloud Services)
